@@ -35,8 +35,8 @@ public class ParameterTestServlet extends HttpServlet {
 			} else {
 				String value = request.getParameter(param);
 				System.out.println(param + " -- " + value);
+				
 			}
-
 		}
 
 	}
