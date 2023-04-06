@@ -4,6 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<!-- <meta http-equiv="refresh" content="3;auth/login.jsp"> -->
 <title>Insert title here</title>
 </head>
 <body>
@@ -39,5 +40,14 @@
 			</form>
 		</li>
 	</ul>
+	<hr>
+	<a href="auth/login.jsp">로그인(상대경로)</a><br>
+	<a href="<%= request.getContextPath() %>/auth/login.jsp">로그인(절대경로)</a>
+	<hr>
+	<a href="<%= request.getContextPath() %>/mvc2model/calc">계산기</a>
+	<hr>
+	<h2>직원 관리</h2>
+	<a href="<%= request.getContextPath() %>/emp/emplist.do">직원 조회</a>
+	<a href="<%= request.getContextPath() %>/emp/empinsert.do">직원 등록</a>
 </body>
 </html>

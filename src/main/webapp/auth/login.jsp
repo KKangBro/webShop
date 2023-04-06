@@ -5,34 +5,36 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<link rel="stylesheet" href="../css/login.css" type="text/css">
+<title>로그인 페이지</title>
+<link rel="stylesheet" href="<%= request.getContextPath() %>/css/login.css" type="text/css">
+<script src='https://kit.fontawesome.com/a076d05399.js' ></script>
 </head>
 <body>
 	<h2>Weekly Coding Challenge #1: Sign in/up Form</h2>
 	<div class="container" id="container">
 		<div class="form-container sign-up-container">
-			<form action="#">
+			<form action="<%= request.getContextPath() %>/auth/signup.do" method="post">
 				<h1>Create Account</h1>
 				<div class="social-container">
-					<a href="#" class="social"><i class="fab fa-facebook-f"></i></a> <a
-						href="#" class="social"><i class="fab fa-google-plus-g"></i></a> <a
-						href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+					<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+					<a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+					<a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
 				</div>
-				<span>or use your email for registration</span> <input type="text"
-					placeholder="Name" /> <input type="email" placeholder="Email" />
-				<input type="password" placeholder="Password" />
+				<span>or use your email for registration</span>
+				<input type="text" name="manager_name" placeholder="Name" />
+				<input type="email" name="email" placeholder="Email" />
+				<input type="password" name="pass" placeholder="Password" />
 				<button>Sign Up</button>
 			</form>
 		</div>
 		<div class="form-container sign-in-container">
 			<!-- 주소를 호출 -->
-			<form action="loginCheck.do" method="get" enctype="application/x-www-form-urlencoded">
+			<form action="<%= request.getContextPath() %>/auth/loginCheck.do" method="get" enctype="application/x-www-form-urlencoded">
 				<h1>Sign in</h1>
 				<div class="social-container">
-					<a href="#" class="social"><i class="fab fa-facebook-f"></i></a> <a
-						href="#" class="social"><i class="fab fa-google-plus-g"></i></a> <a
-						href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+					<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+					<a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+					<a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
 				</div>
 				<span>or use your account</span>
 				<input type="email" name="email" placeholder="Email" />
@@ -45,8 +47,7 @@
 			<div class="overlay">
 				<div class="overlay-panel overlay-left">
 					<h1>Welcome Back!</h1>
-					<p>To keep connected with us please login with your personal
-						info</p>
+					<p>To keep connected with us please login with your personal 	info</p>
 					<button class="ghost" id="signIn">Sign In</button>
 				</div>
 				<div class="overlay-panel overlay-right">
@@ -58,7 +59,6 @@
 		</div>
 	</div>
 
-
-	<script src="../js/login.js" type="text/javascript"></script>
+	<script src="<%= request.getContextPath() %>/js/login.js" type="text/javascript"></script>
 </body>
 </html>
