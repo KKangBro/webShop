@@ -21,6 +21,7 @@ public class RegisterServlet extends HttpServlet {
 
 		request.setCharacterEncoding("utf-8");
 		
+		System.out.println("IP: " + request.getRemoteAddr()+"\tRegister.");
 		String manager_name = request.getParameter("manager_name");
 		// get 방식은 parameter가 넘어올때 url에 encoding돼서 들어온다.
 		// post 방식은 parameter가 넘어올때 요청문서의 body에 들어온다. 한글이 깨짐.

@@ -8,9 +8,40 @@
 <title>로그인 페이지</title>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/login.css" type="text/css">
 <script src='https://kit.fontawesome.com/a076d05399.js' ></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script>
+	$(function() {
+		$('#emailDupCheck').on('click', function() {
+			// page이동없이 서버에 요청보내고 응답받기 : ajax
+			$.ajax({
+				url:"emailDupCheck.do",
+				method:"get",
+				data:{'email':$('#m_email').val()},
+				success:function(responseData){
+					//alert(responseData);
+					$('#message').css('font-weight','bolder');
+					if(responseData == 1){
+						$('#message').css('color','red');
+						$('#message').text("이미 존재하는 이메일입니다.");
+						$('#m_email').val("");
+						$('#m_email').focus();
+					} else {
+						$('#message').text("사용 가능한 이메일입니다.");
+					}
+				},
+				error:function(message){
+					alert(message);					
+				}
+			});
+		});
+	});
+</script>
 </head>
 <body>
 	<h2>Weekly Coding Challenge #1: Sign in/up Form</h2>
+	<div id="visit-div">
+		today visit: ${visitor}&emsp;total visit: ${visitor}
+	</div>
 	<div class="container" id="container">
 		<div class="form-container sign-up-container">
 			<form action="<%= request.getContextPath() %>/auth/signup.do" method="post">
@@ -22,14 +53,16 @@
 				</div>
 				<span>or use your email for registration</span>
 				<input type="text" name="manager_name" placeholder="Name" />
-				<input type="email" name="email" placeholder="Email" />
+				<input type="email" id="m_email" name="email" placeholder="Email" />
+				<span id="message"></span>
+				<input type="button" id="emailDupCheck" value="중복 체크">
 				<input type="password" name="pass" placeholder="Password" />
 				<button>Sign Up</button>
 			</form>
 		</div>
 		<div class="form-container sign-in-container">
 			<!-- 주소를 호출 -->
-			<form action="<%= request.getContextPath() %>/auth/loginCheck.do" method="get" enctype="application/x-www-form-urlencoded">
+			<form action="<%= request.getContextPath() %>/auth/loginCheck.do" method="post" enctype="application/x-www-form-urlencoded">
 				<h1>Sign in</h1>
 				<div class="social-container">
 					<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>

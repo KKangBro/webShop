@@ -43,9 +43,29 @@ List<EmpVO> empList = (List<EmpVO>)request.getAttribute("empAll");
 		margin: 30px auto 5px;
 	}
 	
-	div {
+	#container {
 		width: 90%;
 		margin: 20px auto;
+	}
+	
+	#login-user-div {
+		width: 100%;
+		margin-bottom: 10px;
+		text-align: right;
+	}
+	
+	#btn-div {
+		display: inline-block;
+	}
+	
+	.dropdown {
+		background-color: transparent;
+		display: inline-block;
+	}
+	
+	#insertBtn {
+		float: right;
+		margin-bottom: 10px;
 	}
 	
 	table {
@@ -61,6 +81,7 @@ List<EmpVO> empList = (List<EmpVO>)request.getAttribute("empAll");
 		font-family: 'ChosunCentennial';
 		text-align: center;
 		padding: 8px;
+		line-height: 2em;
 	}
 	
 	tbody > tr:hover {
@@ -68,13 +89,10 @@ List<EmpVO> empList = (List<EmpVO>)request.getAttribute("empAll");
 	}
 	
 	td {
+		height: 50px;
 		text-align: center;
+		font-size: 13px;
 		line-height: 2em;
-	}
-	
-	#insertBtn {
-		float: right;
-		margin-bottom: 10px;
 	}
 	
 	#btn1, #btn2 {
@@ -104,6 +122,20 @@ List<EmpVO> empList = (List<EmpVO>)request.getAttribute("empAll");
 		font-weight: bolder;
 		transition: 0.2s;
 	}
+	
+	.btnDel {
+		width: 30px;
+		margin-right: 10px;
+		text-align: center;
+		border: 1px solid gray;
+		border-radius: 10px;
+	}
+	
+	.btnDel:hover {
+		background-color: orange;
+		border: 0px;
+		font-weight: bolder;
+	}
 
 </style>
 <script>
@@ -113,19 +145,25 @@ List<EmpVO> empList = (List<EmpVO>)request.getAttribute("empAll");
 	$(function() {
 		$('#btn1').click(func_btn1);
 		$('#btn2').click(func_btn2);
-		$("th").click(rowSelect);
+		$('th').click(rowSelect);
+		$('.btnDel').on('click', func_del);
+		
 		
 		
 		var str = '';
 		var arr = ['IT_PROG', 'AD_VP', 'AD_PRES', 'FI_MGR', 'FI_ACCOUNT', 'ST_MAN'];
 		$.each(arr, function(index, item) {
 			console.log(item);
-			str += '<option>'+item+'</option>';
+			str += '<li><a class="dropdown-item" href="#">'+ item +'</a></li>';
 		});
 		
-		$('#jobs').html(str); // html() : jQuery 함수.	innerHTML : 자바스크립트 속성
+		$('.dropdown-menu').html(str); // html() : jQuery 함수.	innerHTML : 자바스크립트 속성
 		
 	});
+	
+	function func_del() {
+		location.href='empDelete.do?empid=' + $(this).attr('data-del');
+	}
 	
 	function func_btn1() {
 		flag1 *= -1;
@@ -167,24 +205,30 @@ List<EmpVO> empList = (List<EmpVO>)request.getAttribute("empAll");
 		
 	}
 	
-	
-	
 </script>
 </head>
 <body>
 	<h1>직원 목록</h1>
-	<div id="divBtn">
-		<button id="btn1" class="btn btn-outline-success">짝수번째 줄</button>
-		<button id="btn2" class="btn btn-outline-success">이름이 S로 시작하는 튜플</button>
-		<!-- s문자가 포함 
-		급여가 5000 이상
-		직원 번호가 홀수인 사람 선택
-		직책으로 드롭다운 메뉴 select > option -->
-		<select id="jobs">
-			
-		</select>
-	</div>
-	<div>
+	
+	<div id="container">
+		<div id="login-user-div">${loginUser.getManager_name()} 님, 반갑습니다!</div>
+		<div id="btn-div">
+			<button id="btn1" class="btn btn-outline-success">짝수번째 줄</button>
+			<button id="btn2" class="btn btn-outline-success">이름이 S로 시작하는 튜플</button>
+			<!-- s문자가 포함 
+			급여가 5000 이상
+			직원 번호가 홀수인 사람 선택
+			직책으로 드롭다운 메뉴 select > option -->
+			<div class="dropdown">
+			  <button id="jobs" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+			    직책
+			  </button>
+			  <ul class="dropdown-menu">
+			  	
+			  </ul>
+			</div>
+		</div>
+	
 		<a href="empinsert.do" type="button" id="insertBtn" class="btn btn-outline-success">신규 직원 등록</a>
 		<br>
 		<br>
@@ -202,6 +246,7 @@ List<EmpVO> empList = (List<EmpVO>)request.getAttribute("empAll");
 					<th>커미션</th>
 					<th>매니저</th>
 					<th>부서</th>
+					<th></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -218,6 +263,7 @@ List<EmpVO> empList = (List<EmpVO>)request.getAttribute("empAll");
 					<td><%=emp.getCommission_pct() %></td>
 					<td><%=emp.getManager_id() %></td>
 					<td><%=emp.getDepartment_id() %></td>
+					<td><button class="btnDel" data-del="<%=emp.getEmployee_id() %>">⨉</button></td>
 				</tr>
 				<%} %>
 			</tbody>

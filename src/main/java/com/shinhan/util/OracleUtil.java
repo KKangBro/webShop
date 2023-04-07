@@ -1,13 +1,33 @@
 package com.shinhan.util;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
 public class OracleUtil {
 	
+	public static Connection getConnection() {
+		Connection conn = null;
+		Context initContext;
+		try {
+			initContext = new InitialContext();
+			Context envContext  = (Context)initContext.lookup("java:/comp/env");
+			DataSource ds = (DataSource)envContext.lookup("jdbc/myoracle");
+			conn = ds.getConnection();
+		} catch (NamingException | SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return conn;
+	}
+	
+	/*
 	public static Connection getConnection() {
 		Connection conn = null;
 		String url = "jdbc:oracle:thin:@localhost:1521:xe";
@@ -24,6 +44,7 @@ public class OracleUtil {
 		
 		return conn;
 	}
+	*/
 	
 	public static void dbDisconnect(ResultSet rs, Statement st, Connection conn) {
 		try {

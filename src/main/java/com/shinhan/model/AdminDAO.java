@@ -60,5 +60,28 @@ public class AdminDAO {
 
 		return admin;
 	}
+	
+	// 중복 체크
+	public int dupCheck(String email) {
+		int cnt = 0;
+		String sql = "select count(*) from admins where email = ? ";
+		conn = OracleUtil.getConnection();
+		try {
+			pst = conn.prepareStatement(sql);
+			pst.setString(1, email);
+			rs = pst.executeQuery();
+
+			while (rs.next()) {
+				cnt = rs.getInt(1);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			OracleUtil.dbDisconnect(rs, pst, conn);
+		}
+
+		return cnt;
+	}
 
 }

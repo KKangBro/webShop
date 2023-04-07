@@ -127,10 +127,10 @@
 					<label>COMMISSION PCT<input type="number" step="0.1" name="commission_pct" value="0.2"></label>
 				</li>
 				<li>
-					<label>MANAGER ID<input type="number" name="manager_id" value="100"></label>
+					<label>MANAGER ID<input type="number" name="manager_id" value="205"></label>
 				</li>
 				<li>
-					<label>DEPARTMENT ID<input type="number" name="department_id" value="60"></label>
+					<label>DEPARTMENT ID<input type="number" name="department_id" value="110"></label>
 				</li>
 			</ul>
 			<hr>

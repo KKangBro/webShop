@@ -5,10 +5,23 @@
 <head>
 <meta charset="UTF-8">
 <!-- <meta http-equiv="refresh" content="3;auth/login.jsp"> -->
-<title>Insert title here</title>
+<title>INDEX</title>
 </head>
 <body>
 	<h1>JSP/Servlet Project ^오^ 무야호~!</h1>
+	<hr>
+	<p>getInitParameter: <%=application.getInitParameter("DB_userid") %>
+	<hr>
+	<!-- application, session, request 영역 연습 -->
+	<p>application : ${myData1}</p>
+	<p>session : ${myData2}</p>
+	<p>request : ${myData3}</p>
+	<p>가까운 곳 request > session > application : ${myName}</p>
+	<p>applicationScope : ${applicationScope.myName}</p>
+	<p>sessionScope : ${sessionScope.myName}</p>
+	<p>requestScope : ${requestScope.myName}</p>
+	<hr>
+	
 	<ul>
 		<li><a href="first">첫번째 서블릿 요청(get)</a></li>
 		<li>
@@ -41,8 +54,8 @@
 		</li>
 	</ul>
 	<hr>
-	<a href="auth/login.jsp">로그인(상대경로)</a><br>
-	<a href="<%= request.getContextPath() %>/auth/login.jsp">로그인(절대경로)</a>
+	<a href="auth/loginCheck.do">로그인(상대경로)</a><br>
+	<a href="<%= request.getContextPath() %>/auth/loginCheck.do">로그인(절대경로)</a>
 	<hr>
 	<a href="<%= request.getContextPath() %>/mvc2model/calc">계산기</a>
 	<hr>

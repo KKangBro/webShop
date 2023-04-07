@@ -14,4 +14,9 @@ public class AdminService {
 	public AdminVO loginCheck(String email, String pass) {
 		return dao.loginCheck(email, pass);
 	}
+	
+	// 중복 체크
+	public int dupCheck(String email) {
+		return dao.dupCheck(email);
+	}
 }
