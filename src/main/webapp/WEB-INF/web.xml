@@ -15,7 +15,7 @@
 	
 	<context-param>
 		<param-name>totalVisit</param-name>
-		<param-value>0</param-value>
+		<param-value>417</param-value>
 	</context-param>
 	
 	<!-- 서블릿 등록 @WebServlet과 같음 -->

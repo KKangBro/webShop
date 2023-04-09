@@ -17,7 +17,6 @@ import com.shinhan.vo.EmpVO;
 @WebServlet("/get")
 public class ServletContextTest2 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// ServletContext => application에 저장하기
@@ -46,8 +45,6 @@ public class ServletContextTest2 extends HttpServlet {
 		}
 		br.close();
 		
-		
 	}
-
 
 }

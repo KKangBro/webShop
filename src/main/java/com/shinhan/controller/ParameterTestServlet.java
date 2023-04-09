@@ -14,13 +14,11 @@ import javax.servlet.http.HttpServletResponse;
 public class ParameterTestServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		String userid = request.getParameter("userid");
-		String salary = request.getParameter("salary");
-		String gender = request.getParameter("gender");
-		String[] hobby = request.getParameterValues("hobby");
-
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//		String userid = request.getParameter("userid");
+//		String salary = request.getParameter("salary");
+//		String gender = request.getParameter("gender");
+//		String[] hobby = request.getParameterValues("hobby");
 //		System.out.println("userid: " + userid);
 //		System.out.println("salary: " + salary);
 //		System.out.println("gender: " + gender);
@@ -35,7 +33,6 @@ public class ParameterTestServlet extends HttpServlet {
 			} else {
 				String value = request.getParameter(param);
 				System.out.println(param + " -- " + value);
-				
 			}
 		}
 

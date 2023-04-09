@@ -40,7 +40,8 @@
 <body>
 	<h2>Weekly Coding Challenge #1: Sign in/up Form</h2>
 	<div id="visit-div">
-		today visit: ${visitor}&emsp;total visit: ${visitor}
+		<div id="todayVisit">today visit: ${visitor}</div>
+		<div id="totalVisit">total visit: ${totalVisit}</div>
 	</div>
 	<div class="container" id="container">
 		<div class="form-container sign-up-container">

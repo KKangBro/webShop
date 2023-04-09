@@ -255,7 +255,19 @@ footer a {
 #visit-div {
 	width: 300px;
 	margin: 0px auto 20px;
-	text-align: center;
+	display: flex;
+    justify-content: flex-start;
 }
 
+#todayVisit {
+	width: 50%;
+	margin: 0px auto 0px 0px;
+	text-align: left;
+}
+
+#totalVisit {
+	width: 50%;
+	margin: 0px 0px 0px auto;
+	text-align: right;
+}
 

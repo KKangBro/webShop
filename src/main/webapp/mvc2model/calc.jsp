@@ -39,27 +39,26 @@
 		<input type="number" value="${rst}">
 	</form>
 	
-	
 	<script>
-	var op = `${op}`;
-	var element;
-	switch (op) {
-	case '+':
-		element = document.getElementById('plus');
-		break;
-	case '-':
-		element = document.getElementById('sub');
-		break;
-	case '*':
-		element = document.getElementById('multi');
-		break;
-	case '/':
-		element = document.getElementById('div');
-		break;
-	}
-	if(element)
-		element.setAttribute('selected', 'selected');
-	
-</script>
+		var op = `${op}`;
+		var element;
+		switch (op) {
+		case '+':
+			element = document.getElementById('plus');
+			break;
+		case '-':
+			element = document.getElementById('sub');
+			break;
+		case '*':
+			element = document.getElementById('multi');
+			break;
+		case '/':
+			element = document.getElementById('div');
+			break;
+		}
+		if(element)
+			element.setAttribute('selected', 'selected');
+		
+	</script>
 </body>
 </html>
