@@ -1,4 +1,4 @@
-package com.shinhan.controller;
+package com.shinhan.controller2;
 
 import java.io.IOException;
 import java.util.List;
@@ -23,10 +23,12 @@ public class EmpListServlet extends HttpServlet {
 		
 		HttpSession session = request.getSession();
 		AdminVO user = (AdminVO) session.getAttribute("loginUser");
-		if(user == null) {
-			response.sendRedirect("../auth/loginCheck.do");
-			return;
-		}
+		
+//		if(user == null) {
+//			response.sendRedirect("../auth/loginCheck.do");
+//			return;
+//		}
+		
 		System.out.println("user: " + user);
 		
 		EmpService service = new EmpService();

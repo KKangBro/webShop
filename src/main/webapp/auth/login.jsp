@@ -73,8 +73,7 @@
 				<span>or use your account</span>
 				<input type="email" name="email" placeholder="Email" />
 				<input type="password" name="pass" placeholder="Password" /> <a href="#">Forgot your password?</a>
-				<button>Sign In</button>
-				<!-- <input type="submit" value="Sign In"> -->
+				<button>Sign In</button> <!-- <input type="submit" value="Sign In"> -->
 			</form>
 		</div>
 		<div class="overlay-container">

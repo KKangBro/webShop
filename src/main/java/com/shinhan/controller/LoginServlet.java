@@ -29,8 +29,6 @@ public class LoginServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ServletContext app = request.getServletContext();
 		Object obj = app.getAttribute("visitor");
-		int totalVisit = Integer.parseInt(app.getInitParameter("totalVisit"));
-		System.out.println(totalVisit);
 		
 		int todayVisit = -1;
 		if (obj == null) {
@@ -39,11 +37,8 @@ public class LoginServlet extends HttpServlet {
 			todayVisit = (Integer)obj;
 			todayVisit++;
 		}
-		totalVisit += todayVisit;
 		
 		app.setAttribute("visitor", todayVisit);
-		app.setAttribute("totalVisit", totalVisit);
-//		app.setInitParameter("totalVisit", totalVisit+"");
 		
 		RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
 		rd.forward(request, response);

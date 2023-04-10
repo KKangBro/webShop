@@ -48,7 +48,7 @@ List<EmpVO> empList = (List<EmpVO>)request.getAttribute("empAll");
 		margin: 20px auto;
 	}
 	
-	#login-user-div {
+	#login-div {
 		width: 100%;
 		margin-bottom: 10px;
 		text-align: right;
@@ -136,6 +136,8 @@ List<EmpVO> empList = (List<EmpVO>)request.getAttribute("empAll");
 		border: 0px;
 		font-weight: bolder;
 	}
+	
+	
 
 </style>
 <script>
@@ -148,7 +150,7 @@ List<EmpVO> empList = (List<EmpVO>)request.getAttribute("empAll");
 		$('th').click(rowSelect);
 		$('.btnDel').on('click', func_del);
 		
-		
+		$('#btn-logout').on('click', func_logout);
 		
 		var str = '';
 		var arr = ['IT_PROG', 'AD_VP', 'AD_PRES', 'FI_MGR', 'FI_ACCOUNT', 'ST_MAN'];
@@ -160,6 +162,19 @@ List<EmpVO> empList = (List<EmpVO>)request.getAttribute("empAll");
 		$('.dropdown-menu').html(str); // html() : jQuery 함수.	innerHTML : 자바스크립트 속성
 		
 	});
+	
+	function func_logout() {
+		$.ajax({
+			url:"../auth/logout.do",
+			success:function(){
+				alert('로그아웃이 정상적으로 처리되었습니다.');
+				location.href='../auth/loginCheck.do';
+			},
+			error:function(message){
+				alert(message);					
+			}
+		});			
+	}
 	
 	function func_del() {
 		location.href='empDelete.do?empid=' + $(this).attr('data-del');
@@ -211,7 +226,10 @@ List<EmpVO> empList = (List<EmpVO>)request.getAttribute("empAll");
 	<h1>직원 목록</h1>
 	
 	<div id="container">
-		<div id="login-user-div">${loginUser.getManager_name()} 님, 반갑습니다!</div>
+		<div id="login-div">
+			${loginUser.getManager_name()} 님, 반갑습니다!
+			<input type="button" value="로그아웃" id="btn-logout">
+		</div>
 		<div id="btn-div">
 			<button id="btn1" class="btn btn-outline-success">짝수번째 줄</button>
 			<button id="btn2" class="btn btn-outline-success">이름이 S로 시작하는 튜플</button>
