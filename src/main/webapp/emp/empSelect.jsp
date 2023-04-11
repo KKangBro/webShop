@@ -36,6 +36,10 @@ List<EmpVO> empList = (List<EmpVO>)request.getAttribute("empAll");
 	    font-style: normal;
 	}
 	
+	html {
+		scroll-behavior: smooth;
+	}
+	
 	* {
 		font-family: 'EF_watermelonSalad';
 		letter-spacing: 0.2em;
@@ -65,6 +69,11 @@ List<EmpVO> empList = (List<EmpVO>)request.getAttribute("empAll");
 		width: 100%;
 		margin: 10px 0px;
 		text-align: right;
+	}
+	
+	#btn-logout {
+	    padding: 4px 6px;
+	    line-height: normal;
 	}
 	
 	#btn-div {
@@ -106,6 +115,8 @@ List<EmpVO> empList = (List<EmpVO>)request.getAttribute("empAll");
 		text-align: center;
 		padding: 8px;
 		line-height: 2em;
+		position: sticky;
+		top: 0;
 	}
 	
 	tbody > tr:hover {
@@ -131,6 +142,7 @@ List<EmpVO> empList = (List<EmpVO>)request.getAttribute("empAll");
 	
 	.btnDel {
 		width: 30px;
+		padding: 0px;
 		margin-right: 10px;
 		text-align: center;
 		border: 1px solid gray;
@@ -141,6 +153,12 @@ List<EmpVO> empList = (List<EmpVO>)request.getAttribute("empAll");
 		background-color: orange;
 		border: 0px;
 		font-weight: bolder;
+	}
+	
+	#up-div {
+		width: 100px;
+		margin: 20px auto;
+		text-align: center;
 	}
 
 </style>
@@ -153,8 +171,12 @@ List<EmpVO> empList = (List<EmpVO>)request.getAttribute("empAll");
 		$('#btn2').click(func_btn2);
 		$('th').click(rowSelect);
 		$('.btnDel').on('click', func_del);
-		
 		$('#btn-logout').on('click', func_logout);
+		$('#up-btn').on('click', function() {
+			location.href='#top';
+		});
+
+		
 		
 		var str = '';
 		var arr = ['IT_PROG', 'AD_VP', 'AD_PRES', 'FI_MGR', 'FI_ACCOUNT', 'ST_MAN'];
@@ -227,7 +249,7 @@ List<EmpVO> empList = (List<EmpVO>)request.getAttribute("empAll");
 </script>
 </head>
 <body>
-	<h1>직원 목록</h1>
+	<h1 id="top">직원 목록</h1>
 	
 	<div id="container">
 		<div class="session-div">세션에서 로그인 사용자 읽기(EL): ${sessionScope.loginUser}</div>
@@ -288,6 +310,7 @@ List<EmpVO> empList = (List<EmpVO>)request.getAttribute("empAll");
 				<%} %>
 			</tbody>
 		</table>
+		<div id="up-div"><button id="up-btn" class="btn btn-outline-success">맨 위로</button></div>
 	</div>
 	
 </body>

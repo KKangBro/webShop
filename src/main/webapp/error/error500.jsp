@@ -8,7 +8,7 @@
 </head>
 <body>
 	<h1>500 ERROR</h1>
-	<h2><%=exception %></h2>
+	<p><%=exception %></p>
 	<p><%=exception.getMessage() %></p>
 </body>
 </html>

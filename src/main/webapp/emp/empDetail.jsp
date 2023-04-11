@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>직원 상세 정보</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 <style>
 	@font-face {
 	    font-family: 'EF_watermelonSalad';
@@ -24,7 +25,7 @@
 	
 	h1 {
 		text-align: center;
-		margin: 30px auto;
+		margin: 30px auto 10px;
 	}
 	
 	#container {
@@ -36,6 +37,13 @@
 		width: 100%;
 		margin: 10px 0px;
 		text-align: right;
+	}
+	
+	#btn-logout {
+		margin: 0px;
+	    font-size: 16px;
+	    padding: 4px 6px;
+	    line-height: normal;
 	}
 	
 	fieldset {
@@ -90,17 +98,17 @@
 		background-color: #f0f0f0;
 	}
 	
-	.btn {
+	.btn-div {
 		width: 158px;
 		margin: 0px 20px 0px auto;
 	}
 	
-	.btn > input {
+	.btn-div > input {
 		background: lightblue;
 		color: black;
 		font-weight: bold;
 		padding: 5px 10px;
-		transition:0.5s;
+		transition:0.2s;
 	}
 	
 	#btn_submit {
@@ -124,8 +132,25 @@
 		font-weight: bolder;
 	}
 	
-	
 </style>
+<script>
+	$(function() {
+		$('#btn-logout').on('click', func_logout);
+	});
+	
+	function func_logout() {
+		$.ajax({
+			url:"../auth/logout.do",
+			success:function(){
+				alert('로그아웃이 정상적으로 처리되었습니다.');
+				location.href='../auth/loginCheck.do';
+			},
+			error:function(message){
+				alert(message);					
+			}
+		});			
+	}
+</script>
 </head>
 <body>
 	<h1>^오^</h1>
@@ -175,7 +200,7 @@
 					</li>
 				</ul>
 				<hr>
-				<div class="btn">
+				<div class="btn-div">
 					<input id="btn_submit" type="submit" value="수정">
 					<input id="btn_reset" type="reset" value="취소">
 				</div>

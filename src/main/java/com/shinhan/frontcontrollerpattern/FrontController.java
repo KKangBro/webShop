@@ -16,10 +16,6 @@ public class FrontController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		System.out.println(request.getMethod() + " 요청");
-//		System.out.println(request.getServletPath() + " getServletPath");
-//		System.out.println(request.getRequestURI() + " uri");
-		
 		String path = request.getServletPath();
 		CommonControllerInterface controller = null;
 		Map<String, Object> data = new HashMap<>();
@@ -60,17 +56,18 @@ public class FrontController extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-		// redirect:auth/loginCheck.do
-		// auth/login.jsp
-		if(page.contains("redirect:")) {
+		if(page.contains("redirect:")) { // ex) redirect:auth/loginCheck.do
 			response.sendRedirect(page.substring(9));
-		} else if(page.contains("responseBody:")) {
+		} else if(page.contains("responseBody:")) { // ex) ajax
 			response.getWriter().append(page.substring(13));
-		} else {
+		} else { // ex) auth/login.jsp
 			RequestDispatcher rd = request.getRequestDispatcher(page);
 			rd.forward(request, response);
 		}
 		
+//		System.out.println(request.getMethod() + " 요청");
+//		System.out.println(request.getServletPath() + " getServletPath");
+//		System.out.println(request.getRequestURI() + " uri");
 	}
 
 }

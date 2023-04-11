@@ -17,7 +17,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>직원 등록</title>
+<title>신규 직원 등록</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 <style type="text/css">
 	@font-face {
 	    font-family: 'EF_watermelonSalad';
@@ -37,19 +38,44 @@
 	
 	h1 {
 		text-align: center;
-		margin: 30px auto;
+		margin: 30px auto 10px;
+	}
+	
+	#container {
+		width: 90%;
+		margin: 20px auto;
+	}
+	
+	#login-div {
+		width: 100%;
+		margin: 10px 0px;
+		text-align: right;
+	}
+	
+	#btn-logout {
+		margin: 0px;
+	    font-size: 16px;
+	    padding: 4px 6px;
+	    line-height: normal;
+	}
+	
+	#test-div {
+		/* display: none; */
+		font-size: 10px;
+		margin-bottom: 5px;
 	}
 	
 	fieldset {
 		font-weight: bold;
-		background-color: white;
-		margin: 20px auto;
+		background-color: #f0f0f0;
 		width: 450px;
+		margin: 20px auto;
 	}
 	
 	legend {
 		background-color: lightblue;
 		font-weight: bold;
+		font-size: 1.5em;
 	}
 	
 	ul {
@@ -69,18 +95,30 @@
 		width: 150px;
 	}
 	
-	.btn {
-		width: 158px;
-		margin: 0px 20px 0px auto;
-	
+	input[name='hire_date'] {
+		width: 153px;
 	}
 	
-	.btn > input {
+	input[name='employee_id'] {
+		background-color: gray;
+		font-style: italic;
+	}
+	
+	form input:not(input[name='employee_id']) {
+		background-color: #f0f0f0;
+	}
+	
+	.btn-div {
+		width: 158px;
+		margin: 0px 20px 0px auto;
+	}
+	
+	.btn-div > input {
 		background: lightblue;
 		color: black;
 		font-weight: bold;
 		padding: 5px 10px;
-		transition:0.5s;
+		transition:0.2s;
 	}
 	
 	#btn_submit {
@@ -104,70 +142,83 @@
 		font-weight: bolder;
 	}
 	
-	#login-div {
-		width: 70%;
-		height: 30px;
-		margin: 10px auto;
-		text-align: right;
-	}
-
 </style>
+<script>
+	$(function() {
+		$('#btn-logout').on('click', func_logout);
+	});
+	
+	function func_logout() {
+		$.ajax({
+			url:"../auth/logout.do",
+			success:function(){
+				alert('로그아웃이 정상적으로 처리되었습니다.');
+				location.href='../auth/loginCheck.do';
+			},
+			error:function(message){
+				alert(message);					
+			}
+		});			
+	}
+</script>
 </head>
 <body>
 	<h1>신규 직원을 등록하세요</h1>
 	<%-- JSP주석 --%>
 	<!-- service의 out.write() -->
-	<%@include file="../common/header.jsp" %>
-	<div id="test-div">
-		subject: <%=subject %><br>
-		score: <%=score %><br>
-		add함수: <%=add(100, 200)%><br>
-		age: <%=age %>
+	<div id="container">
+		<%@include file="../common/header.jsp" %>
+		<div id="test-div">
+			subject: <%=subject %>,&emsp;
+			score: <%=score %>,&emsp;
+			add함수: <%=add(100, 200)%>,&emsp;
+			age: <%=age %>
+		</div>
+		<form method="post" action="<%= request.getContextPath() %>/emp/empinsert.do">
+			<fieldset>
+			<legend>직원 정보 입력</legend>
+				<ul>
+					<li>
+						<label>EMPLOYEE ID<input type="text" name="employee_id" value="auto increment.." readonly></label>
+					</li>
+					<li>
+						<label>FIRST NAME<input type="text" name="first_name" autofocus placeholder="KyungYun"></label>
+					</li>
+					<li>
+						<label>LAST NAME<input type="text"name="last_name" placeholder="Kim" required></label>
+					</li>
+					<li>
+						<label>EMAIL<input type="email" name="email" required placeholder="kky@gmail.com"></label>
+					</li>
+					<li>
+						<label>PHONE NUMBER<input type="tel" name="phone_number" pattern="010-[0-9]{4}-[0-9]{4}" value="010-1234-1234"></label>
+					</li>
+					<li>
+						<label>HIRE DATE<input type="date" name="hire_date" required></label>
+					</li>
+					<li>
+						<label>JOB ID<input type="text" name="job_id" required value="IT_PROG"></label>
+					</li>
+					<li>
+						<label>SALARY<input type="number" name="salary" placeholder="4000"></label>
+					</li>
+					<li>
+						<label>COMMISSION PCT<input type="number" step="0.1" name="commission_pct" value="0.2"></label>
+					</li>
+					<li>
+						<label>MANAGER ID<input type="number" name="manager_id" value="205"></label>
+					</li>
+					<li>
+						<label>DEPARTMENT ID<input type="number" name="department_id" value="110"></label>
+					</li>
+				</ul>
+				<hr>
+				<div class="btn-div">
+					<input id="btn_submit" type="submit" value="확인">
+					<input id="btn_reset" type="reset" value="취소">
+				</div>
+			</fieldset>
+		</form>
 	</div>
-	<form method="post" action="<%= request.getContextPath() %>/emp/empinsert.do">
-		<fieldset>
-		<legend>직원 정보 입력</legend>
-			<ul>
-				<li>
-					<label>EMPLOYEE ID<input type="text" name="employee_id" value="auto increment.." readonly></label>
-				</li>
-				<li>
-					<label>FIRST NAME<input type="text" name="first_name" autofocus value="KyungYun"></label>
-				</li>
-				<li>
-					<label>LAST NAME<input type="text"name="last_name" value="Kim" required></label>
-				</li>
-				<li>
-					<label>EMAIL<input type="email" name="email" required value="kky@gmail.com"></label>
-				</li>
-				<li>
-					<label>PHONE NUMBER<input type="tel" name="phone_number" pattern="010-[0-9]{4}-[0-9]{4}" value="010-1234-1234"></label>
-				</li>
-				<li>
-					<label>HIRE DATE<input type="date" name="hire_date" required></label>
-				</li>
-				<li>
-					<label>JOB ID<input type="text" name="job_id" required value="IT_PROG"></label>
-				</li>
-				<li>
-					<label>SALARY<input type="number" name="salary"></label>
-				</li>
-				<li>
-					<label>COMMISSION PCT<input type="number" step="0.1" name="commission_pct" value="0.2"></label>
-				</li>
-				<li>
-					<label>MANAGER ID<input type="number" name="manager_id" value="205"></label>
-				</li>
-				<li>
-					<label>DEPARTMENT ID<input type="number" name="department_id" value="110"></label>
-				</li>
-			</ul>
-			<hr>
-			<div class="btn">
-				<input id="btn_submit" type="submit" value="확인">
-				<input id="btn_reset" type="reset" value="취소">
-			</div>
-		</fieldset>
-	</form>
 </body>
 </html>
