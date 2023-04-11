@@ -14,17 +14,24 @@ List<EmpVO> empList = (List<EmpVO>)request.getAttribute("empAll");
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 <title>직원 목록</title>
-<style type="text/css">
-
+<style>
 	@font-face {
 	    font-family: 'EF_watermelonSalad';
 	    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-EF@1.0/EF_watermelonSalad.woff2') format('woff2');
 	    font-weight: normal;
 	    font-style: normal;
 	}
+	
 	@font-face {
 	    font-family: 'ChosunCentennial';
 	    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-02@1.0/ChosunCentennial.woff2') format('woff2');
+	    font-weight: normal;
+	    font-style: normal;
+	}
+	
+	@font-face {
+	    font-family: 'SUIT-Regular';
+	    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Regular.woff2') format('woff2');
 	    font-weight: normal;
 	    font-style: normal;
 	}
@@ -48,9 +55,15 @@ List<EmpVO> empList = (List<EmpVO>)request.getAttribute("empAll");
 		margin: 20px auto;
 	}
 	
+	.session-div {
+		/* display: none; */
+		font-size: 10px;
+		margin-bottom: 5px;
+	}
+	
 	#login-div {
 		width: 100%;
-		margin-bottom: 10px;
+		margin: 10px 0px;
 		text-align: right;
 	}
 	
@@ -58,27 +71,38 @@ List<EmpVO> empList = (List<EmpVO>)request.getAttribute("empAll");
 		display: inline-block;
 	}
 	
+	#btn1, #btn2 {
+		float: left;
+		margin-right: 5px;
+	}
+	
 	.dropdown {
-		background-color: transparent;
 		display: inline-block;
+	}
+	
+	#jobs {
+		background-color: transparent;
+		color: #0d6efd;
+	}
+	
+	#jobs:hover {
+		background-color: #0d6efd;
+		color: white;
 	}
 	
 	#insertBtn {
 		float: right;
-		margin-bottom: 10px;
 	}
 	
 	table {
 		width: 100%;
+		margin-top: 10px;
 		background-color: #f0f0f0;
 	}
 	
-	thead {
-		background-color: lightblue;
-	}
-	
 	th {
-		font-family: 'ChosunCentennial';
+		background-color: lightblue;
+		font-family: 'SUIT-Regular';
 		text-align: center;
 		padding: 8px;
 		line-height: 2em;
@@ -95,32 +119,14 @@ List<EmpVO> empList = (List<EmpVO>)request.getAttribute("empAll");
 		line-height: 2em;
 	}
 	
-	#btn1, #btn2 {
-		float: left;
-		margin-right: 5px;
-	}
-	
-	select {
-		width: 200px;
-		height: 38px;
-		padding: .5em;
-		border: 1px solid #999;
-		font-size: 15px;
-	}
-	
-	option {
-		font-size: 17px;
-	}
-	
 	a {
 		text-decoration-line: none;
 	}
 	
 	td a:hover {
-		text-shadow: 2px 2px 3px white;
+		text-shadow: 1px 1px 3px #f0f0f0;
 		color: darkgreen;
 		font-weight: bolder;
-		transition: 0.2s;
 	}
 	
 	.btnDel {
@@ -136,8 +142,6 @@ List<EmpVO> empList = (List<EmpVO>)request.getAttribute("empAll");
 		border: 0px;
 		font-weight: bolder;
 	}
-	
-	
 
 </style>
 <script>
@@ -226,10 +230,10 @@ List<EmpVO> empList = (List<EmpVO>)request.getAttribute("empAll");
 	<h1>직원 목록</h1>
 	
 	<div id="container">
-		<div id="login-div">
-			${loginUser.getManager_name()} 님, 반갑습니다!
-			<input type="button" value="로그아웃" id="btn-logout">
-		</div>
+		<div class="session-div">세션에서 로그인 사용자 읽기(EL): ${sessionScope.loginUser}</div>
+		<div class="session-div">세션에서 로그인 사용자 읽기(ScriptLet): <%=session.getAttribute("loginUser") %></div>
+		<%@include file="../common/header.jsp" %>
+		<!-- inclulde 디렉티브는 소스를 합쳐서 컴파일한다. -->
 		<div id="btn-div">
 			<button id="btn1" class="btn btn-outline-success">짝수번째 줄</button>
 			<button id="btn2" class="btn btn-outline-success">이름이 S로 시작하는 튜플</button>
@@ -248,8 +252,6 @@ List<EmpVO> empList = (List<EmpVO>)request.getAttribute("empAll");
 		</div>
 	
 		<a href="empinsert.do" type="button" id="insertBtn" class="btn btn-outline-success">신규 직원 등록</a>
-		<br>
-		<br>
 		<table>
 			<thead>
 				<tr>

@@ -3,6 +3,8 @@ package com.shinhan.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -17,29 +19,27 @@ import com.shinhan.model.AdminService;
 import com.shinhan.vo.AdminVO;
 
 // http://localhost:9090/webShop
-@WebServlet("/auth/loginCheck.do") // URL mapping주소를 정의
+//@WebServlet("/auth/loginCheck.do") // URL mapping주소를 정의
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	@Override
-	public void init() throws ServletException {
-		super.init();
-	}
+	ServletContext app;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ServletContext app = request.getServletContext();
-		Object obj = app.getAttribute("visitor");
+//		ServletContext app = request.getServletContext();
+//		Object obj = app.getAttribute("visitor");
+//		
+//		int todayVisit = -1;
+//		if (obj == null) {
+//			todayVisit = 1;
+//		} else {
+//			todayVisit = (Integer)obj;
+//			todayVisit++;
+//		}
+//		
+//		app.setAttribute("visitor", todayVisit);
 		
-		int todayVisit = -1;
-		if (obj == null) {
-			todayVisit = 1;
-		} else {
-			todayVisit = (Integer)obj;
-			todayVisit++;
-		}
-		
-		app.setAttribute("visitor", todayVisit);
-		
+		app = getServletContext();
 		RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
 		rd.forward(request, response);
 	}
@@ -50,12 +50,30 @@ public class LoginServlet extends HttpServlet {
 		AdminService service = new AdminService();
 		AdminVO admin = service.loginCheck(email, pass);
 
-		System.out.println("IP: " + request.getRemoteAddr() + "\tLogin Attempted.");
+		System.out.println("IP: " + request.getRemoteAddr() + "\tLogin Attempted...");
 		if (admin == null) {
-			System.out.println("Login Failed..");
+			System.out.println("Login Failed!\n");
 		} else {
-			System.out.println("[Login]\t" + admin);
+			System.out.println("Login Success!\n" + admin + "\n");
 		}
+		
+		Object obj = app.getAttribute("userList");
+		List<AdminVO> userList = null;
+		if(admin != null) {
+			if(obj == null) {
+				userList = new ArrayList<>();
+			} else {
+				userList = (List<AdminVO>) obj;
+			}
+			userList.add(admin);
+			app.setAttribute("userList", userList);
+			
+			System.out.println("---------------------------User List---------------------------");
+			for (AdminVO vo : userList)
+				System.out.println(vo);
+			System.out.println("---------------------------------------------------------------");
+		}
+		
 
 		// 응답 문서 만들기. header + ResponseBody에 문자열을 출력하기
 		response.setContentType("text/html;charset=utf-8");

@@ -30,8 +30,10 @@ public class LoginCheckFilter extends HttpFilter implements Filter {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
 
-		if (req.getServletPath().equals("/auth/loginCheck.do")) {
-
+		if (req.getServletPath().equals("/auth/loginCheck.do") ||
+			req.getServletPath().equals("/auth/signup.do") || 
+			req.getServletPath().equals("/auth/emailDupCheck.do")) {
+			// do_nothing
 		} else {
 			HttpSession session = req.getSession();
 			AdminVO user = (AdminVO) session.getAttribute("loginUser");

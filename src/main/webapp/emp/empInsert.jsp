@@ -1,5 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" %>
+<%
+	// 자바 코드 작성 - service의 코드에 삽입된다.
+	String subject = "jsp코드";
+	
+	int age = Integer.parseInt(request.getParameter("age"));
+%>
+<%!
+	// 자바 코드 작성... 선언부 - 별도의 메서드로 만들어진다.
+	int score = 100;
+	public int add(int a, int b){
+		return a + b;
+	}
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -90,11 +103,27 @@
 		color: white;
 		font-weight: bolder;
 	}
+	
+	#login-div {
+		width: 70%;
+		height: 30px;
+		margin: 10px auto;
+		text-align: right;
+	}
 
 </style>
 </head>
 <body>
 	<h1>신규 직원을 등록하세요</h1>
+	<%-- JSP주석 --%>
+	<!-- service의 out.write() -->
+	<%@include file="../common/header.jsp" %>
+	<div id="test-div">
+		subject: <%=subject %><br>
+		score: <%=score %><br>
+		add함수: <%=add(100, 200)%><br>
+		age: <%=age %>
+	</div>
 	<form method="post" action="<%= request.getContextPath() %>/emp/empinsert.do">
 		<fieldset>
 		<legend>직원 정보 입력</legend>
