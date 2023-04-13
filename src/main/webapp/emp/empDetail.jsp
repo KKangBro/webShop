@@ -3,9 +3,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
 <title>직원 상세 정보</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<%@ include file="../common/commonfiles.jsp" %>
 <style>
 	@font-face {
 	    font-family: 'EF_watermelonSalad';
@@ -31,19 +30,6 @@
 	#container {
 		width: 90%;
 		margin: 20px auto;
-	}
-	
-	#login-div {
-		width: 100%;
-		margin: 10px 0px;
-		text-align: right;
-	}
-	
-	#btn-logout {
-		margin: 0px;
-	    font-size: 16px;
-	    padding: 4px 6px;
-	    line-height: normal;
 	}
 	
 	fieldset {
@@ -133,24 +119,6 @@
 	}
 	
 </style>
-<script>
-	$(function() {
-		$('#btn-logout').on('click', func_logout);
-	});
-	
-	function func_logout() {
-		$.ajax({
-			url:"../auth/logout.do",
-			success:function(){
-				alert('로그아웃이 정상적으로 처리되었습니다.');
-				location.href='../auth/loginCheck.do';
-			},
-			error:function(message){
-				alert(message);					
-			}
-		});			
-	}
-</script>
 </head>
 <body>
 	<h1>^오^</h1>

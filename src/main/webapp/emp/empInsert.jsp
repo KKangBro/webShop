@@ -4,7 +4,7 @@
 	// 자바 코드 작성 - service의 코드에 삽입된다.
 	String subject = "jsp코드";
 	
-	int age = Integer.parseInt(request.getParameter("age"));
+	//int age = Integer.parseInt(request.getParameter("age"));
 %>
 <%!
 	// 자바 코드 작성... 선언부 - 별도의 메서드로 만들어진다.
@@ -16,10 +16,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+<%@ include file="../common/commonfiles.jsp" %>
 <title>신규 직원 등록</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-<style type="text/css">
+<style>
 	@font-face {
 	    font-family: 'EF_watermelonSalad';
 	    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-EF@1.0/EF_watermelonSalad.woff2') format('woff2');
@@ -44,19 +43,6 @@
 	#container {
 		width: 90%;
 		margin: 20px auto;
-	}
-	
-	#login-div {
-		width: 100%;
-		margin: 10px 0px;
-		text-align: right;
-	}
-	
-	#btn-logout {
-		margin: 0px;
-	    font-size: 16px;
-	    padding: 4px 6px;
-	    line-height: normal;
 	}
 	
 	#test-div {
@@ -143,24 +129,6 @@
 	}
 	
 </style>
-<script>
-	$(function() {
-		$('#btn-logout').on('click', func_logout);
-	});
-	
-	function func_logout() {
-		$.ajax({
-			url:"../auth/logout.do",
-			success:function(){
-				alert('로그아웃이 정상적으로 처리되었습니다.');
-				location.href='../auth/loginCheck.do';
-			},
-			error:function(message){
-				alert(message);					
-			}
-		});			
-	}
-</script>
 </head>
 <body>
 	<h1>신규 직원을 등록하세요</h1>
@@ -172,7 +140,7 @@
 			subject: <%=subject %>,&emsp;
 			score: <%=score %>,&emsp;
 			add함수: <%=add(100, 200)%>,&emsp;
-			age: <%=age %>
+			<%-- age: <%=age %> --%>
 		</div>
 		<form method="post" action="<%= request.getContextPath() %>/emp/empinsert.do">
 			<fieldset>

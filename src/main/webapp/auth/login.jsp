@@ -39,13 +39,13 @@
 </head>
 <body>
 	<h2>Weekly Coding Challenge #1: Sign in/up Form</h2>
-	<div id="visit-div">
+	<div id="visit-div" style="display: none;">
 		<div id="todayVisit">today visit: ${visitor}</div>
 		<div id="totalVisit">total visit: ${totalVisit}</div>
 	</div>
 	<div class="container" id="container">
 		<div class="form-container sign-up-container">
-			<form action="<%= request.getContextPath() %>/auth/signup.do" method="post">
+			<form action="<%= request.getContextPath() %>/auth/signup.do" method="post" enctype="multipart/form-data">
 				<h1>Create Account</h1>
 				<div class="social-container">
 					<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
@@ -58,6 +58,7 @@
 				<span id="message"></span>
 				<input type="button" id="emailDupCheck" value="중복 체크">
 				<input type="password" name="pass" placeholder="Password" />
+				<input type="file" name="pic">
 				<button>Sign Up</button>
 			</form>
 		</div>

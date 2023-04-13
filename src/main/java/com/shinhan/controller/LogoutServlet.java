@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import com.shinhan.vo.AdminVO;
 
-@WebServlet("/auth/logout.do")
+//@WebServlet("/auth/logout.do")
 public class LogoutServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

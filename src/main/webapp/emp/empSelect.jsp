@@ -2,17 +2,16 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%
-List<EmpVO> empList = (List<EmpVO>)request.getAttribute("empAll");
-%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<jsp:include page="../common/commonfiles.jsp"/>
 <title>직원 목록</title>
 <style>
 	@font-face {
@@ -51,7 +50,8 @@ List<EmpVO> empList = (List<EmpVO>)request.getAttribute("empAll");
 	
 	h1 {
 		text-align: center;
-		margin: 30px auto 5px;
+		padding-top: 30px;
+		margin: 0px auto 5px;
 	}
 	
 	#container {
@@ -65,16 +65,7 @@ List<EmpVO> empList = (List<EmpVO>)request.getAttribute("empAll");
 		margin-bottom: 5px;
 	}
 	
-	#login-div {
-		width: 100%;
-		margin: 10px 0px;
-		text-align: right;
-	}
 	
-	#btn-logout {
-	    padding: 4px 6px;
-	    line-height: normal;
-	}
 	
 	#btn-div {
 		display: inline-block;
@@ -160,6 +151,13 @@ List<EmpVO> empList = (List<EmpVO>)request.getAttribute("empAll");
 		margin: 20px auto;
 		text-align: center;
 	}
+	
+	#footer {
+		width: 100%;
+		text-align: center;
+	}
+	
+	
 
 </style>
 <script>
@@ -171,9 +169,11 @@ List<EmpVO> empList = (List<EmpVO>)request.getAttribute("empAll");
 		$('#btn2').click(func_btn2);
 		$('th').click(rowSelect);
 		$('.btnDel').on('click', func_del);
-		$('#btn-logout').on('click', func_logout);
 		$('#up-btn').on('click', function() {
-			location.href='#top';
+			location.href = '#top';
+		});
+		$('.dropdown-item ').on('click', function() {
+			console.log('selected');
 		});
 
 		
@@ -182,28 +182,15 @@ List<EmpVO> empList = (List<EmpVO>)request.getAttribute("empAll");
 		var arr = ['IT_PROG', 'AD_VP', 'AD_PRES', 'FI_MGR', 'FI_ACCOUNT', 'ST_MAN'];
 		$.each(arr, function(index, item) {
 			console.log(item);
-			str += '<li><a class="dropdown-item" href="#">'+ item +'</a></li>';
+			str += '<li><a class="dropdown-item">'+ item +'</a></li>';
 		});
 		
 		$('.dropdown-menu').html(str); // html() : jQuery 함수.	innerHTML : 자바스크립트 속성
 		
 	});
 	
-	function func_logout() {
-		$.ajax({
-			url:"../auth/logout.do",
-			success:function(){
-				alert('로그아웃이 정상적으로 처리되었습니다.');
-				location.href='../auth/loginCheck.do';
-			},
-			error:function(message){
-				alert(message);					
-			}
-		});			
-	}
-	
 	function func_del() {
-		location.href='empDelete.do?empid=' + $(this).attr('data-del');
+		location.href='${path}/emp/empDelete.do?empid=' + $(this).attr('data-del');
 	}
 	
 	function func_btn1() {
@@ -248,14 +235,15 @@ List<EmpVO> empList = (List<EmpVO>)request.getAttribute("empAll");
 	
 </script>
 </head>
-<body>
-	<h1 id="top">직원 목록</h1>
-	
+<body id="top">
+	<h1>직원 목록</h1>
 	<div id="container">
 		<div class="session-div">세션에서 로그인 사용자 읽기(EL): ${sessionScope.loginUser}</div>
 		<div class="session-div">세션에서 로그인 사용자 읽기(ScriptLet): <%=session.getAttribute("loginUser") %></div>
-		<%@include file="../common/header.jsp" %>
 		<!-- inclulde 디렉티브는 소스를 합쳐서 컴파일한다. -->
+		<%@ include file="../common/header.jsp" %>
+		<!-- include action tag 이용 : 컴파일하고 합친다.-->
+		<%-- <jsp:include page="../common/header.jsp"></jsp:include> --%>
 		<div id="btn-div">
 			<button id="btn1" class="btn btn-outline-success">짝수번째 줄</button>
 			<button id="btn2" class="btn btn-outline-success">이름이 S로 시작하는 튜플</button>
@@ -264,19 +252,17 @@ List<EmpVO> empList = (List<EmpVO>)request.getAttribute("empAll");
 			직원 번호가 홀수인 사람 선택
 			직책으로 드롭다운 메뉴 select > option -->
 			<div class="dropdown">
-			  <button id="jobs" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
-			    직책
-			  </button>
-			  <ul class="dropdown-menu">
-			  	
-			  </ul>
+			  <button id="jobs" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">직책</button>
+			  <ul class="dropdown-menu"></ul>
 			</div>
 		</div>
-	
-		<a href="empinsert.do" type="button" id="insertBtn" class="btn btn-outline-success">신규 직원 등록</a>
+		<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">modal</button>
+		<%@include file="empInsertModal.jsp" %>
+		<a href="${path}/emp/empinsert.do" type="button" id="insertBtn" class="btn btn-outline-success">신규 직원 등록</a>
 		<table>
 			<thead>
 				<tr>
+					<th>순서</th>
 					<th>직원 번호</th>
 					<th>이름</th>
 					<th>성</th>
@@ -285,6 +271,7 @@ List<EmpVO> empList = (List<EmpVO>)request.getAttribute("empAll");
 					<th>입사일</th>
 					<th>직책</th>
 					<th>급여</th>
+					<th>누적 급여</th>
 					<th>커미션</th>
 					<th>매니저</th>
 					<th>부서</th>
@@ -292,26 +279,37 @@ List<EmpVO> empList = (List<EmpVO>)request.getAttribute("empAll");
 				</tr>
 			</thead>
 			<tbody>
-				<%for(EmpVO emp : empList) { %>
-				<tr>
-					<td><a href="empDetail.do?empid=<%=emp.getEmployee_id() %>"><%=emp.getEmployee_id() %></a></td>
-					<td><a href="empDetail.do?empid=<%=emp.getEmployee_id() %>"><%=emp.getFirst_name() %></a></td>
-					<td><%=emp.getLast_name() %></td>
-					<td><%=emp.getEmail() %></td>
-					<td><%=emp.getPhone_number() %></td>
-					<td><%=emp.getHire_date() %></td>
-					<td><%=emp.getJob_id() %></td>
-					<td><%=emp.getSalary() %></td>
-					<td><%=emp.getCommission_pct() %></td>
-					<td><%=emp.getManager_id() %></td>
-					<td><%=emp.getDepartment_id() %></td>
-					<td><button class="btnDel" data-del="<%=emp.getEmployee_id() %>">⨉</button></td>
-				</tr>
-				<%} %>
+				<!-- for (EmpVO emp : empAll) -->
+				<c:set var="totalSalary" value="0"/>
+				<c:forEach items="${empAll}" var="emp" varStatus="status">
+					<c:set var="totalSalary" value="${totalSalary + emp.salary}"/>
+					<tr>
+						<td style="background-color:${status.first||status.last ? 'orange' : 'lightgreen'};">${status.count}</td>
+						<td><a href="${path}/emp/empDetail.do?empid=${emp.employee_id}">${emp.employee_id}</a></td>
+						<td style="${fn:length(emp.first_name) > 5 ? 'font-style: italic;' : 'font-style: normal;'}"><a href="${path}/emp/empDetail.do?empid=${emp.employee_id}">${emp.first_name}</a></td>
+						<td>${emp.last_name}</td>
+						<td>${fn:contains(emp.email, '@') ? fn:substring(emp.email, 0, fn:indexOf(emp.email, '@')) : emp.email}</td>
+						<td>${emp.phone_number}</td>
+						<td> <fmt:formatDate value="${emp.hire_date}" pattern="YYYY/MM/dd"/> </td>
+						<td>${emp.job_id}</td>
+						<td><fmt:formatNumber value="${emp.salary}" groupingUsed="true"/></td>
+						<td>${totalSalary}</td>
+						<td><fmt:formatNumber value="${emp.commission_pct}" type="percent"/></td>
+						<td>${emp.manager_id}</td>
+						<td>${emp.department_id}</td>
+						<td><button class="btnDel" data-del="${emp.employee_id}">⨉</button></td>
+					</tr>
+				</c:forEach>
 			</tbody>
 		</table>
 		<div id="up-div"><button id="up-btn" class="btn btn-outline-success">맨 위로</button></div>
+		<p id="footer"><%=company %></p>
+		
+		<form method="post"  action="${path}/downloadTest/result.jsp" >
+			<input type=hidden  name="param1" value="top.jpg" /> <br>
+			<input type=hidden  name="param2" value="umbrella.jpg" /> <br>
+			<input type ="submit" value="이미지 다운로드">	 
+		</form> 
 	</div>
-	
 </body>
 </html>

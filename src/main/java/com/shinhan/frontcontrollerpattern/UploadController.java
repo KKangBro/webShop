@@ -1,7 +1,7 @@
 package com.shinhan.frontcontrollerpattern;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -12,33 +12,24 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
-import com.shinhan.model.AdminService;
-import com.shinhan.vo.AdminVO;
-
-public class SignUpController implements CommonControllerInterface {
-
+public class UploadController implements CommonControllerInterface {
 	@Override
 	public String execute(Map<String, Object> data) throws Exception {
-		String method = (String) data.get("method");
 		HttpServletRequest request = (HttpServletRequest) data.get("request");
+		String method = (String) data.get("method");
 		String page = "";
 
 		if (method.equals("GET")) { // GET
-			
+			page = "uploadTest/uploadForm.jsp";
 		} else { // POST
-			System.out.println("IP: " + request.getRemoteAddr()+"\tRegistered.");
-
-			AdminService service = new AdminService();
-			service.registerAdmin(doHandle(request));
-			
-			page = "redirect:loginCheck.do";
+			doHandle(request);
+//			redirect:" + request.getContextPath() + "/emp/emplist.do
+			page = "redirect:"+request.getContextPath();
 		}
 		return page;
 	}
 
-	private AdminVO doHandle(HttpServletRequest request) throws ServletException, IOException {
-		AdminVO admin = new AdminVO();
-		
+	private void doHandle(HttpServletRequest request) throws ServletException, IOException {
 		String encoding = "utf-8";
 		
 		String currentPath = request.getServletContext().getRealPath("uploads");
@@ -58,14 +49,6 @@ public class SignUpController implements CommonControllerInterface {
 				if (fileItem.isFormField()) {
 					// input type이 file이 아닌 것
 					System.out.println(fileItem.getFieldName() + "=" + fileItem.getString(encoding));
-					String colName = fileItem.getFieldName();
-					String colValue = fileItem.getString(encoding);
-					if(colName.equals("manager_name"))
-						admin.setManager_name(colValue);
-					if(colName.equals("email"))
-						admin.setEmail(colValue);
-					if(colName.equals("pass"))
-						admin.setPass(colValue);
 				} else {
 					System.out.println("파라미터명: " + fileItem.getFieldName());
 					System.out.println("파일명: " + fileItem.getName());
@@ -79,19 +62,11 @@ public class SignUpController implements CommonControllerInterface {
 						String fileName = fileItem.getName().substring(idx + 1);
 						File uploadFile = new File(currentDirPath + "\\" + fileName);
 						fileItem.write(uploadFile);
-						
-						// 이미지 이름이 DB에 저장되어야한다.
-						admin.setPic(fileName);
-						
-						
-					} // end if
-				} // end if
-			} // end for
+					}
+				}
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		return admin;
 	}
-	
 }

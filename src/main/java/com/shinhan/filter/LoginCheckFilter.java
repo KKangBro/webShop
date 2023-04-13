@@ -15,16 +15,10 @@ import javax.servlet.http.HttpSession;
 
 import com.shinhan.vo.AdminVO;
 
-@WebFilter(urlPatterns = {"/emp/*", "/cart/*"})
+//@WebFilter(urlPatterns = {"/emp/*", "/cart/*"})
+@WebFilter("*.do")
 public class LoginCheckFilter extends HttpFilter implements Filter {
 	private static final long serialVersionUID = 1L;
-
-	public LoginCheckFilter() {
-        super();
-    }
-
-	public void destroy() {
-	}
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
@@ -32,7 +26,8 @@ public class LoginCheckFilter extends HttpFilter implements Filter {
 
 		if (req.getServletPath().equals("/auth/loginCheck.do") ||
 			req.getServletPath().equals("/auth/signup.do") || 
-			req.getServletPath().equals("/auth/emailDupCheck.do")) {
+			req.getServletPath().equals("/auth/emailDupCheck.do") ||
+			req.getServletPath().equals("/jstl.do")) {
 			// do_nothing
 		} else {
 			HttpSession session = req.getSession();
@@ -44,9 +39,6 @@ public class LoginCheckFilter extends HttpFilter implements Filter {
 		}
 
 		chain.doFilter(request, response);
-	}
-
-	public void init(FilterConfig fConfig) throws ServletException {
 	}
 
 }

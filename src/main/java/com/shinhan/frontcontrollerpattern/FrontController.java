@@ -21,10 +21,23 @@ public class FrontController extends HttpServlet {
 		Map<String, Object> data = new HashMap<>();
 		data.put("method", request.getMethod());
 		data.put("request",	request);
+		data.put("response",	response);
 		
 		switch (path) {
+		case "/download.do":
+			controller = new DownloadController();
+			break;
+		case "/upload.do":
+			controller = new UploadController();
+			break;
+		case "/jstl.do":
+			controller = new JSTLController();
+			break;
 		case "/auth/loginCheck.do":
 			controller = new LoginController();
+			break;
+		case "/auth/logout.do":
+			controller = new LogoutController();
 			break;
 		case "/auth/signup.do":
 			controller = new SignUpController();
@@ -60,6 +73,8 @@ public class FrontController extends HttpServlet {
 			response.sendRedirect(page.substring(9));
 		} else if(page.contains("responseBody:")) { // ex) ajax
 			response.getWriter().append(page.substring(13));
+		} else if(page.contains("download")) { // ex) download
+			
 		} else { // ex) auth/login.jsp
 			RequestDispatcher rd = request.getRequestDispatcher(page);
 			rd.forward(request, response);
