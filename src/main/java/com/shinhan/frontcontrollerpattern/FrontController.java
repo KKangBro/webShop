@@ -30,6 +30,9 @@ public class FrontController extends HttpServlet {
 		case "/site-result/jobsAjax.do":
 			controller = new JobsAjaxController();
 			break;
+		case "/site-result/adminsAjax.do":
+			controller = new AdminsAjaxController();
+			break;
 		case "/download.do":
 			controller = new DownloadController();
 			break;

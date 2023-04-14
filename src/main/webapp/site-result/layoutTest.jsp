@@ -9,6 +9,35 @@
 <link rel="stylesheet" href="css/style.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script>
+	function view() {
+		$.ajax({
+			url:'adminsAjax.do',
+			method:'get',
+			success:function(responseData){
+				/* console.log(responseData); */
+				
+				var datas = JSON.parse(responseData);
+				var arr = datas.adminList;
+				var output = '<ul>';
+				$.each(arr, function(index, item) {
+					let id = 'quick-icon'+(index + 1);
+					console.log(id);
+					console.log(item.pic);
+					
+					document.getElementById(id).style = 'background-image: url(../uploads/'+ item.pic +'); background-size: cover;';
+					
+					output += '<li><img width=150 height=150 src="../uploads/'+ item.pic + '"></li>';
+				});
+				output += '</ul>';
+				$("#gallery").html(output);
+			},
+			error:function(message) {
+				alert('오류: ' + message);
+				console.log(message);
+			}
+		});
+	}
+
 	function call() {
 		$.ajax({
 			url:'jobsAjax.do',
@@ -16,7 +45,23 @@
 			method:'get',
 			success:function(responseData) {
 				console.log(responseData);
-				$("#here").html(responseData);
+				
+				// 2) JSON으로 받은 data처리
+				var datas = JSON.parse(responseData); // {"jobList" : [{"job_id":"IT"}, {}, {} ]}
+				var arr = datas.jobList;
+				var output = '<ul>';
+				$.each(arr.slice(0, 5), function(index, item) {
+					console.log(item);
+					output += '<li>' + item["job_id"] + ' - ' + item["job_title"] + '</li>';
+					<%-- output+=`<li>${"${item['job_id']}"}</li>`; --%>
+					//output+=`<li>${"${item['job_id']}"}</li>`;
+				});
+				output += '</ul>';
+				$("#here").html(output);
+				
+				
+				// 1) HTML로 받은 경우
+				// $("#here").html(responseData);
 			},
 			error:function(message) {
 				alert('오류: ' + message);
@@ -30,7 +75,7 @@
   <div id="container">    
     <header>
       <div id="logo">
-        <a href="index.html">
+        <a href="layout.do">
           <h1>Dream Jeju</h1>
         </a>
       </div>
@@ -49,7 +94,7 @@
               <li><a href="#">힐링 워크샵</a></li>
             </ul>
           </li>
-          <li><a href="#">갤러리</a></li>
+          <li><a href="javascript:view()">갤러리</a></li>
           <li><a href="javascript:call()">문의하기</a></li>
         </ul>
       </nav>
@@ -89,7 +134,7 @@
             <li><img src="images/img-3.jpg"></li>
             <li><img src="images/img-1.jpg"></li>
             <li><img src="images/img-2.jpg"></li>
-            <li><img src="images/img-3.jpg"></li>                     
+            <li><img src="images/img-3.jpg"></li>
           </ul>
         </div>        
       </div>

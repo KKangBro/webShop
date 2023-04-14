@@ -6,9 +6,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.shinhan.util.OracleUtil;
 import com.shinhan.vo.AdminVO;
+import com.shinhan.vo.EmpVO;
 
 public class AdminDAO {
 	Connection conn;
@@ -83,6 +86,33 @@ public class AdminDAO {
 		}
 
 		return cnt;
+	}
+	
+	// 3명 이름순으로 admin 조회
+	public List<AdminVO> selectThreeAdmin() {
+		List<AdminVO> adminList = new ArrayList<>();
+		String sql = "select * from (select * from admins order by manager_name desc) where rownum <= 3";
+		conn = OracleUtil.getConnection();
+		try {
+			st = conn.createStatement();
+			rs = st.executeQuery(sql);
+
+			while (rs.next()) {
+				AdminVO admin = new AdminVO();
+				admin.setEmail(rs.getString(1));
+				admin.setManager_name(rs.getString(2));
+				admin.setPass(rs.getString(3));
+				admin.setPic(rs.getString(4));
+				adminList.add(admin);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			OracleUtil.dbDisconnect(rs, st, conn);
+		}
+
+		return adminList;
 	}
 
 }
