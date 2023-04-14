@@ -62,6 +62,19 @@
 		width: 150px;
 	}
 	
+	label select {
+		width: 158px;
+		height: 28.666px;
+		background-color: #f0f0f0;
+		border: 2px solid black;
+		float: right;
+		margin-right: 10px;
+	}
+	
+	option {
+		
+	}
+	
 	input[name='hire_date'] {
 		width: 153px;
 	}
@@ -152,7 +165,14 @@
 						<label>HIRE DATE<input type="date" name="hire_date" value="${emp.hire_date}"></label>
 					</li>
 					<li>
-						<label>JOB ID<input type="text" name="job_id" value="${emp.job_id}" readonly></label>
+						<%-- <label>JOB ID<input type="text" name="job_id" value="${emp.job_id}" readonly></label> --%>
+						<label>JOB TITLE
+							<select name="job_id">
+								<c:forEach items="${jobList}" var="job">
+									<option value="${job.job_id}" ${emp.job_id == job.job_id ? "selected" : ""}>${job.job_title}</option>
+								</c:forEach>
+							</select>
+						</label>
 					</li>
 					<li>
 						<label>SALARY<input type="number" name="salary" value="${emp.salary}"></label>
@@ -161,10 +181,24 @@
 						<label>COMMISSION PCT<input type="number" step="0.1" name="commission_pct" value="${emp.commission_pct}" readonly></label>
 					</li>
 					<li>
-						<label>MANAGER ID<input type="number" name="manager_id" value="${emp.manager_id}"></label>
+						<%-- <label>MANAGER ID<input type="number" name="manager_id" value="${emp.manager_id}"></label> --%>
+						<label>MANAGER
+							<select name="manager_id">
+								<c:forEach items="${managerList}" var="manager">
+									<option value="${manager.employee_id}" ${emp.manager_id == manager.employee_id ? "selected" : ""}>${manager.first_name} ${manager.last_name}</option>
+								</c:forEach>
+							</select>
+						</label>
 					</li>
 					<li>
-						<label>DEPARTMENT ID<input type="number" name="department_id" value="${emp.department_id}"></label>
+						<%-- <label>DEPARTMENT ID<input type="number" name="department_id" value="${emp.department_id}"></label> --%>
+						<label>DEPARTMENT
+							<select name="department_id">
+								<c:forEach items="${deptList}" var="dept">
+									<option value="${dept.department_id}" ${emp.department_id == dept.department_id ? "selected" : ""}>${dept.department_name}</option>
+								</c:forEach>
+							</select>
+						</label>
 					</li>
 				</ul>
 				<hr>

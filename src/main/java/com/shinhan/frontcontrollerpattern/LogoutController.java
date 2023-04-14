@@ -38,6 +38,7 @@ public class LogoutController implements CommonControllerInterface {
 		} else { // POST
 			
 		}
+		
 		return page;
 	}
 

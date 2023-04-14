@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.shinhan.model.CompanyService;
 import com.shinhan.model.EmpService;
 import com.shinhan.util.DateUtil;
 import com.shinhan.vo.EmpVO;
@@ -18,12 +19,18 @@ public class EmpInsertController implements CommonControllerInterface {
 		String page = "";
 
 		if (method.equals("GET")) { // GET
+			// 부서, 직책, 매니저를 선택하고자 한다.
+			CompanyService cService = new CompanyService();
+			request.setAttribute("deptList", cService.deptSelectAll());
+			request.setAttribute("managerList", cService.managerSelectAll());
+			request.setAttribute("jobList", cService.jobSelectAll());
+			
 			page = "empInsert.jsp";
 		} else { // POST
 			EmpVO emp = makeEmp(request);
 			
-			EmpService service = new EmpService();
-			System.out.println(service.empInsert(emp));
+			EmpService eService = new EmpService();
+			System.out.println(eService.empInsert(emp));
 			
 			page = "redirect:emplist.do";
 		}

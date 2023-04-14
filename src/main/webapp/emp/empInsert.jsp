@@ -81,6 +81,20 @@
 		width: 150px;
 	}
 	
+	label select {
+		width: 158px;
+		height: 28.666px;
+		background-color: #f0f0f0;
+		border: 2px solid black;
+		float: right;
+		margin-right: 10px;
+	}
+	
+	option {
+		font-size: 16px;
+		zoom: 1.5;
+	}
+	
 	input[name='hire_date'] {
 		width: 153px;
 	}
@@ -165,7 +179,14 @@
 						<label>HIRE DATE<input type="date" name="hire_date" required></label>
 					</li>
 					<li>
-						<label>JOB ID<input type="text" name="job_id" required value="IT_PROG"></label>
+						<label>JOB TITLE
+							<select name="job_id">
+								<c:forEach items="${jobList}" var="job">
+									<option value="${job.job_id}">${job.job_title}</option>
+								</c:forEach>
+							</select>
+						<!-- <input type="text" name="job_id" required value="IT_PROG"> -->
+						</label>
 					</li>
 					<li>
 						<label>SALARY<input type="number" name="salary" placeholder="4000"></label>
@@ -174,10 +195,24 @@
 						<label>COMMISSION PCT<input type="number" step="0.1" name="commission_pct" value="0.2"></label>
 					</li>
 					<li>
-						<label>MANAGER ID<input type="number" name="manager_id" value="205"></label>
+						<label>MANAGER
+							<select name="manager_id">
+								<c:forEach items="${managerList}" var="manager">
+									<option value="${manager.employee_id}">${manager.first_name} ${manager.last_name}</option>
+								</c:forEach>
+							</select>
+						<!-- <input type="number" name="manager_id" value="205"> -->
+						</label>
 					</li>
 					<li>
-						<label>DEPARTMENT ID<input type="number" name="department_id" value="110"></label>
+						<label>DEPARTMENT
+							<select name="department_id">
+								<c:forEach items="${deptList}" var="dept" varStatus="status">
+									<option value="${dept.department_id}">${status.count}: ${dept.department_name}</option>
+								</c:forEach>
+							</select>
+						<!-- <input type="number" name="department_id" value="110"> -->
+						</label>
 					</li>
 				</ul>
 				<hr>

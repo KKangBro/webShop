@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.shinhan.model.CompanyService;
 import com.shinhan.model.EmpService;
 import com.shinhan.util.DateUtil;
 import com.shinhan.vo.EmpVO;
@@ -21,10 +22,16 @@ public class EmpDetailController implements CommonControllerInterface {
 			// 직원 정보 상세 페이지 보여주기
 			int empid = Integer.parseInt(request.getParameter("empid"));
 			
-			EmpService service = new EmpService();
-			EmpVO emp = service.selectById(empid);
+			EmpService eService = new EmpService();
+			EmpVO emp = eService.selectById(empid);
 			
 			request.setAttribute("emp", emp);
+			
+			// 부서, 직책, 매니저를 선택하고자 한다.
+			CompanyService cService = new CompanyService();
+			request.setAttribute("deptList", cService.deptSelectAll());
+			request.setAttribute("managerList", cService.managerSelectAll());
+			request.setAttribute("jobList", cService.jobSelectAll());
 		} else { // POST
 			// 직원 정보 수정하기
 			EmpVO emp = makeEmp(request);
